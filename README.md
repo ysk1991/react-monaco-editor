@@ -1,18 +1,21 @@
 <!--
  * @Author: your name
  * @Date: 2019-10-14 11:41:57
- * @LastEditTime: 2019-11-05 11:43:37
+ * @LastEditTime: 2019-11-05 11:50:35
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /react-monaco-demo/react-monaco-editor/README.md
  -->
-# git clone 
+# 下载项目
+>git clone https://github.com/ysk1991/react-monaco-editor.git
 
-# cd react-monaco-editor
+# 进入目录
+>cd react-monaco-editor
 
-# yarn install
+# 安装依赖
+>yarn install
 
-# 需要安装依赖
+# 需要编辑器依赖
 >yarn add --dev react-monaco-editor monaco-editor
 
 # 暴露webpack
