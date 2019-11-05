@@ -13,17 +13,17 @@ class DEditor extends React.Component {
       suggestions: [
         {
           label: 'tan',
-          insertText: '测试1', // 不写的时候不展示。。
+          insertText: 'tan', // 不写的时候不展示。。
           detail: '提示的文字'
         },
         {
           label: 'cos',
-          insertText: '测试22',
+          insertText: 'cos',
           detail: '提示的文字'
         },
         {
           label: 'sin',
-          insertText: '测试3',
+          insertText: 'sin',
           detail: '提示的文字'
         }
       ], // 储存提示语
@@ -31,37 +31,7 @@ class DEditor extends React.Component {
     }
   }
 
-  componentWillMount() {
-    // 拦截判断是否离开当前页面
-    window.addEventListener('beforeunload', this.beforeunload)
-  }
-
-  componentDidMount() {
-    this.setState({
-      calculateValue: this.props.calculateValue
-    })
-  }
-
   componentWillReceiveProps(nextProps) {
-    // nextProps.setRuleContent设置成一个数组 每一次读取数组的最后一个元素 然后在光标的位置插入编辑器
-    if (this.state.setRuleContent !== nextProps.setRuleContent) {
-      this.setState({
-        setRuleContent: nextProps.setRuleContent
-      })
-      const editor = this.monacoEditorRef.current.editor
-      const p = editor.getPosition()
-      editor.executeEdits('',
-        [
-          {
-            range: new monaco.Range(p.lineNumber,
-              p.column,
-              p.lineNumber,
-              p.column),
-            text: nextProps.setRuleContent[nextProps.setRuleContent.length - 1]
-          }
-        ]
-      )
-    }
     // 编辑框的值
     if (this.state.calculateValue !== nextProps.calculateValue) {
       this.setState({
@@ -70,17 +40,9 @@ class DEditor extends React.Component {
     }
   }
 
-  beforeunload() {
-    // 如果是刷新页面 清空sessionStorage
-    sessionStorage.removeItem('isLoadDEditor')
-  }
-
   onBlur = () => {
     const { calculateValue } = this.state
     this.props.value(calculateValue)
-    if (calculateValue) {
-      this.props.isEditorErrFn(false)
-    }
   }
 
   onChangeHandle = (value, e) => {
@@ -109,21 +71,40 @@ class DEditor extends React.Component {
     renderSideBySide: false
   }
 
+  click = () => {
+    const editor = this.monacoEditorRef.current.editor
+    const p = editor.getPosition()
+    editor.executeEdits('',
+      [
+        {
+          range: new monaco.Range(p.lineNumber,
+            p.column,
+            p.lineNumber,
+            p.column),
+          text: '我是根据光标位置插入的值'
+        }
+      ]
+    )
+  }
+
   render() {
     return (
-      <div onBlur={this.onBlur}>
-        <MonacoEditor
-          ref={this.monacoEditorRef}
-          width='900'
-          height='200'
-          language='plaintext'
-          theme='vs-dark'
-          value={this.state.calculateValue}
-          options={this.options}
-          onChange={this.onChangeHandle}
-          editorDidMount={this.editorDidMountHandle}
-        />
-      </div>
+      <>
+        <div onBlur={this.onBlur}>
+          <MonacoEditor
+            ref={this.monacoEditorRef}
+            width='900'
+            height='200'
+            language='plaintext'
+            theme='vs-dark'
+            value={this.state.calculateValue}
+            options={this.options}
+            onChange={this.onChangeHandle}
+            editorDidMount={this.editorDidMountHandle}
+          />
+        </div>
+        <button onClick={this.click}>根据光标插入</button>
+      </>
     )
   }
 }

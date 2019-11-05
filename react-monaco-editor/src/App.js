@@ -1,24 +1,14 @@
 /*
  * @Author: your name
  * @Date: 2019-11-04 17:30:45
- * @LastEditTime: 2019-11-05 10:13:10
+ * @LastEditTime: 2019-11-05 11:39:56
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /react-monaco-demo/src/testEditor/index.js
  */
 
-
-// dva 不写任何model层 只是展示用
 import React from 'react'
-// import Loadable from 'react-loadable'
 import Editor from './editor'
-// import { MyLoadingComponent } from '../utils/utils'
-
-// const Editor = Loadable({
-//   loader: () => import('../components/Editor'),
-//   loading: MyLoadingComponent
-// })
-
 class Calculate extends React.Component {
   constructor() {
     super()
@@ -36,7 +26,6 @@ class Calculate extends React.Component {
     this.setState({
       componentContentCn
     })
-    this.props.value(componentContentCn)
   }
 
   render() {
